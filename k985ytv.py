@@ -11,5 +11,6 @@ def anonLogin(hostname):
 		return False
 
 
-host = '10.42.0.1'
-anonLogin(host)
+
+for host  in ['10.42.0.1', '10.42.0.184', '10.42.0.113', '10.42.0.200', '10.42.0.33']:
+	anonLogin(host)
